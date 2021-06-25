@@ -6,7 +6,10 @@ ext {
     libraryVersionCode = jframework_tools_version_code
     libraryVersionName = jframework_tools_version_name
 }
+group=jitpack_repo_group
+
 apply from: rootProject.file('gradle/build_library.gradle')
+apply plugin: 'com.github.dcendents.android-maven'
 
 android {
     defaultConfig {
@@ -28,3 +31,5 @@ dependencies {
     api rootProject.ext.dependencies["rxjava2"]
     api rootProject.ext.dependencies["rxandroid2"]
 }
+
+apply from: rootProject.file('gradle/build_lib_source.gradle')
