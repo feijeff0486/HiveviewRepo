@@ -19,19 +19,19 @@ android {
 }
 
 dependencies {
-    implementation rootProject.ext.dependencies["rxandroid2"]
-    implementation rootProject.ext.dependencies["okhttp3_okhttp"]
-    implementation rootProject.ext.dependencies["retrofit2"]
-    implementation rootProject.ext.dependencies["retrofit2_converter_gson"]
-    implementation rootProject.ext.dependencies["retrofit2_adapter_rxjava2"]
-    implementation rootProject.ext.dependencies["retrofit2_converter_scalars"]
-    implementation rootProject.ext.dependencies["okhttp3_logging_interceptor"]
+    api rootProject.ext.dependencies["rxandroid2"]
+    api rootProject.ext.dependencies["okhttp3_okhttp"]
+    api rootProject.ext.dependencies["retrofit2"]
+    api rootProject.ext.dependencies["retrofit2_converter_gson"]
+    api rootProject.ext.dependencies["retrofit2_adapter_rxjava2"]
+    api rootProject.ext.dependencies["retrofit2_converter_scalars"]
+    api rootProject.ext.dependencies["okhttp3_logging_interceptor"]
     if (applyFromJitpackRepo.toBoolean()) {
         println('[rxrequest] apply tools from JitpackRepo.')
-        implementation "com.jeff.jframework:tools:${jframework_core_version_name}"
+        api "com.github.feijeff0486.HiveviewRepo:tools:${jframework_core_version_name}"
     } else {
         println('[rxrequest] apply tools from local module.')
-        implementation project(':tools')
+        api project(':tools')
     }
 }
 

@@ -21,7 +21,7 @@ android {
 dependencies {
     if (applyFromJitpackRepo.toBoolean()) {
         println('[tools] apply core from JitpackRepo.')
-        api "com.jeff.jframework:core:${jframework_core_version_name}"
+        api "com.github.feijeff0486.HiveviewRepo:core:${jframework_core_version_name}"
     } else {
         println('[tools] apply core from local module.')
         api project(':core')

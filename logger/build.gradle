@@ -21,10 +21,10 @@ android {
 dependencies {
     if (applyFromJitpackRepo.toBoolean()) {
         println('[logger] apply tools from JitpackRepo.')
-        implementation "com.jeff.jframework:tools:${jframework_tools_version_name}"
+        api "com.github.feijeff0486.HiveviewRepo:tools:${jframework_tools_version_name}"
     } else {
         println('[logger] apply tools from local module.')
-        implementation project(':tools')
+        api project(':tools')
     }
     api rootProject.ext.dependencies["gson"]
 }
