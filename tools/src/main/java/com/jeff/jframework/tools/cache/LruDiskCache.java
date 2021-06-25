@@ -45,9 +45,9 @@ public class LruDiskCache {
     /**
      * cache directory: /data/data/package/cache/DEFAULT_CACHE_DIR_NAME
      */
-    private static final String DEFAULT_CACHE_DIR_NAME="lruDisk";
-    private static final long DEFAULT_MAX_SIZE  = Long.MAX_VALUE;
-    private static final int  DEFAULT_MAX_COUNT = Integer.MAX_VALUE;
+    private static final String DEFAULT_CACHE_DIR_NAME = "lruDisk";
+    private static final long DEFAULT_MAX_SIZE = Long.MAX_VALUE;
+    private static final int DEFAULT_MAX_COUNT = Integer.MAX_VALUE;
 
     private static final ConcurrentHashMap<String, LruDiskCache> CACHE_MAP = new ConcurrentHashMap<>();
     private final String mCacheKey;
@@ -156,6 +156,43 @@ public class LruDiskCache {
     @Override
     public String toString() {
         return mCacheKey + "@" + Integer.toHexString(hashCode());
+    }
+
+    /**
+     * Put value in cache.
+     *
+     * @param key   The key of cache.
+     * @param value The value of cache.
+     */
+    public void put(@NonNull final String key, Object value) {
+        put(key, value, -1);
+    }
+
+    /**
+     * Put value in cache.
+     *
+     * @param key      The key of cache.
+     * @param value    The value of cache.
+     * @param saveTime The save time of cache, in seconds.
+     */
+    public void put(@NonNull final String key, Object value, final int saveTime) {
+        if (value instanceof byte[]) {
+            put(key, (byte[]) value, saveTime);
+        } else if (value instanceof String) {
+            put(key, (String) value, saveTime);
+        } else if (value instanceof JSONObject) {
+            put(key, (JSONObject) value, saveTime);
+        } else if (value instanceof JSONArray) {
+            put(key, (JSONArray) value, saveTime);
+        } else if (value instanceof Bitmap) {
+            put(key, (Bitmap) value, saveTime);
+        } else if (value instanceof Drawable) {
+            put(key, (Drawable) value, saveTime);
+        } else if (value instanceof Serializable) {
+            put(key, (Serializable) value, saveTime);
+        } else if (value instanceof Parcelable) {
+            put(key, (Parcelable) value, saveTime);
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -604,8 +641,8 @@ public class LruDiskCache {
     private static final class DiskCacheManager {
         private final AtomicLong cacheSize;
         private final AtomicInteger cacheCount;
-        private final long          sizeLimit;
-        private final int           countLimit;
+        private final long sizeLimit;
+        private final int countLimit;
         private final Map<File, Long> lastUsageDates
                 = Collections.synchronizedMap(new HashMap<File, Long>());
         private final File cacheDir;

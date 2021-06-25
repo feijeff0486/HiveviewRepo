@@ -19,7 +19,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class LruDoubleCache {
     private static final ConcurrentHashMap<String, LruDoubleCache> CACHE_MAP = new ConcurrentHashMap<>();
     private LruMemoryCache mLruMemoryCache;
-    private LruDiskCache mLruDiskCache;
+    private LruDiskCache   mLruDiskCache;
 
     /**
      * Return the single {@link LruDoubleCache} instance.
@@ -53,6 +53,27 @@ public class LruDoubleCache {
         mLruDiskCache = cacheUtils;
     }
 
+    /**
+     * Put value in cache.
+     *
+     * @param key   The key of cache.
+     * @param value The value of cache.
+     */
+    public void put(@NonNull final String key, Object value) {
+        put(key, value,-1);
+    }
+
+    /**
+     * Put value in cache.
+     *
+     * @param key   The key of cache.
+     * @param value The value of cache.
+     * @param saveTime The save time of cache, in seconds.
+     */
+    public void put(@NonNull final String key, Object value, final int saveTime) {
+        mLruMemoryCache.put(key, value, saveTime);
+        mLruDiskCache.put(key, value, saveTime);
+    }
 
     ///////////////////////////////////////////////////////////////////////////
     // about bytes
