@@ -15,6 +15,7 @@ import com.jeff.dsource.rxrequest.interceptor.logging.Level;
 import com.jeff.dsource.rxrequest.util.RxScheduler;
 import com.jeff.jframework.tools.StringUtils;
 import com.jeff.jframework.tools.cache.LruDiskCache;
+import com.jeff.jframework.tools.cache.LruDoubleCache;
 import com.jeff.jframework.tools.cache.LruMemoryCache;
 
 import org.json.JSONArray;
@@ -369,15 +370,15 @@ public final class RxRequest {
                         switch (t.cacheMode) {
                             case Mode.MODE_MEMORY_CACHE_ONLY:
                                 // memory缓存
-//                                LruMemoryCache.getInstance().put(t.key, t.data, t.cacheTime);
+                                LruMemoryCache.getInstance().put(t.key, t.data, t.cacheTime);
                                 break;
                             case Mode.MODE_DISK_CACHE_ONLY:
                                 // 磁盘缓存
-//                                LruDiskCache.getInstance().put(t.key, t.data, t.cacheTime);
+                                LruDiskCache.getInstance().put(t.key, t.data, t.cacheTime);
                                 break;
                             case Mode.MODE_DOUBLE_CACHE:
                                 // memory缓存+磁盘缓存
-//                                LruDoubleCache.getInstance().put(t.key, t.data, t.cacheTime);
+                                LruDoubleCache.getInstance().put(t.key, t.data, t.cacheTime);
                                 break;
                             default:
                                 break;
