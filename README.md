@@ -19,11 +19,11 @@ allprojects {
 //核心库
 implementation 'com.github.feijeff0486.HiveviewRepo:core:v0.0.1'
 //日志库
-implementation 'com.github.feijeff0486.HiveviewRepo:logger:v0.0.1'
+implementation 'com.github.feijeff0486.HiveviewRepo:logger:v0.0.3'
 //RecyclerView封装库
-implementation 'com.github.feijeff0486.HiveviewRepo:rv:v0.0.1'
+implementation 'com.github.feijeff0486.HiveviewRepo:rv:v0.0.3'
 //网络请求库
-implementation 'com.github.feijeff0486.HiveviewRepo:rxrequest:v0.0.1'
+implementation 'com.github.feijeff0486.HiveviewRepo:rxrequest:v0.0.3'
 //工具库
-implementation 'com.github.feijeff0486.HiveviewRepo:tools:v0.0.1'
+implementation 'com.github.feijeff0486.HiveviewRepo:tools:v0.0.2'
 ```
