@@ -1,0 +1,19 @@
+/**
+ * Java module library base gradle file
+ * Optional java libraries gradle file
+ */
+String moduleName = project.name
+
+log(moduleName, "apply as java library")
+apply plugin: 'java-library'
+
+def log(String tag, String msg) {
+    println("java-lib [" + tag + "]: " + msg)
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+sourceCompatibility = "8"
+targetCompatibility = "8"

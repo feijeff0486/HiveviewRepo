@@ -1,0 +1,30 @@
+ext {
+    bintrayName = 'tools'
+    artifact = bintrayName
+    libraryName = 'JFramework tools library'
+    libraryDescription = 'Provide common tool support.'
+    libraryVersionCode = jframework_tools_version_code
+    libraryVersionName = jframework_tools_version_name
+}
+apply from: rootProject.file('gradle/build_library.gradle')
+
+android {
+    defaultConfig {
+        versionCode libraryVersionCode.asType(Integer.class)
+        versionName libraryVersionName
+    }
+}
+
+dependencies {
+    if (applyFromJitpackRepo.toBoolean()) {
+        println('[tools] apply core from JitpackRepo.')
+        api "com.jeff.jframework:core:${jframework_core_version_name}"
+    } else {
+        println('[tools] apply core from local module.')
+        api project(':core')
+    }
+    api rootProject.ext.dependencies["gson"]
+    api rootProject.ext.dependencies["glide"]
+    api rootProject.ext.dependencies["rxjava2"]
+    api rootProject.ext.dependencies["rxandroid2"]
+}

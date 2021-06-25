@@ -1,0 +1,29 @@
+ext {
+    bintrayName = 'rv'
+    artifact = bintrayName
+    libraryName = 'JWidget recyclerview library'
+    libraryDescription = 'Recyclerview function library.'
+    libraryVersionCode = jwidget_rv_version_code
+    libraryVersionName = jwidget_rv_version_name
+}
+apply from: rootProject.file('gradle/build_library.gradle')
+
+android {
+    defaultConfig {
+        versionCode libraryVersionCode.asType(Integer.class)
+        versionName libraryVersionName
+    }
+}
+
+dependencies {
+    api rootProject.ext.dependencies["recyclerview"]
+    if (applyFromJitpackRepo.toBoolean()) {
+        println('[rv] apply core&tools from JitpackRepo.')
+        implementation "com.jeff.jframework:core:${jframework_core_version_name}"
+        implementation "com.jeff.jframework:tools:${jframework_tools_version_name}"
+    } else {
+        println('[rv] apply core&tools from local module.')
+        implementation project(':core')
+        implementation project(':tools')
+    }
+}

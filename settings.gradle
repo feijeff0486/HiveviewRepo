@@ -1,0 +1,7 @@
+rootProject.name='HiveviewRepo'
+include ':app'
+include ':core'
+include ':tools'
+include ':logger'
+include ':rv'
+include ':rxrequest'

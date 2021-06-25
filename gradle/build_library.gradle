@@ -1,0 +1,79 @@
+/**
+ * Android module library base gradle file
+ * Optional android libraries gradle file
+ */
+String moduleName = project.name
+
+log(moduleName, "apply as library")
+apply plugin: 'com.android.library'
+
+def log(String tag, String msg) {
+    println("lib-" + tag + "-config: " + msg)
+}
+
+def static buildTime() {
+    return new Date().format("yyyyMMddHHmm", TimeZone.getTimeZone("GMT+08"))
+}
+
+android {
+    compileSdkVersion rootProject.ext.COMPILE_SDK_VERSION
+    buildToolsVersion rootProject.ext.BUILDTOOLS_VERSION
+    //resourcePrefix 保证资源命名的唯一性,只能限定Xml资源,并不能限定图片资源
+//    resourcePrefix moduleName+"_"
+    defaultConfig {
+        minSdkVersion rootProject.ext.MIN_SDK_VERSION
+        targetSdkVersion rootProject.ext.TARGET_SDK_VERSION
+//        multiDexEnabled true
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+//        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    //重新指定defaultPublishConfig
+    defaultPublishConfig rootProject.ext.buildType
+    log(moduleName, "defaultPublishConfig buildType: ${defaultPublishConfig}")
+
+    buildTypes {
+        debug {
+            debuggable true
+            jniDebuggable true
+            minifyEnabled false
+            zipAlignEnabled false
+            shrinkResources false
+        }
+        release {
+            //代码压缩、混淆
+            minifyEnabled false
+            //zipalign(字节码对齐)优化
+            zipAlignEnabled false
+
+//            proguardFile getDefaultProguardFile('proguard-android-optimize.txt')
+//            // NOTE: default rules for android library if this file exists
+//            proguardFile project.file('proguard-rules-android-lib.pro')
+        }
+    }
+
+    android.libraryVariants.all { variant ->
+        variant.outputs.all {
+            def fileName = "${bintrayName}_v${libraryVersionName}_${libraryVersionCode}_${buildTime()}_target${defaultConfig.targetSdkVersion.apiLevel}_${variant.buildType.name}.aar"
+            outputFileName = fileName
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    compileOptions {
+        sourceCompatibility rootProject.ext.JAVA_VERSION
+        targetCompatibility rootProject.ext.JAVA_VERSION
+    }
+}
+
+dependencies {
+//    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation rootProject.ext.dependencies["appcompat_v7"]
+    androidTestImplementation rootProject.ext.dependencies["runner"]
+    androidTestImplementation rootProject.ext.dependencies["espresso"]
+    testImplementation rootProject.ext.dependencies["junit"]
+}

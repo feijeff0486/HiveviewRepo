@@ -1,0 +1,20 @@
+ext {
+    bintrayName = 'core'
+    artifact = bintrayName
+    libraryName = 'JFramework core library'
+    libraryDescription = 'A core library maybe for any other libs.'
+    libraryVersionCode = jframework_core_version_code
+    libraryVersionName = jframework_core_version_name
+}
+apply from: rootProject.file('gradle/build_library.gradle')
+
+android {
+    defaultConfig {
+        versionCode libraryVersionCode.asType(Integer.class)
+        versionName libraryVersionName
+    }
+}
+
+dependencies{
+
+}

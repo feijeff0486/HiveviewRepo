@@ -1,0 +1,27 @@
+ext {
+    bintrayName = 'logger'
+    artifact = bintrayName
+    libraryName = 'JFramework logger library'
+    libraryDescription = 'Provide log printing.'
+    libraryVersionCode = jframework_logger_version_code
+    libraryVersionName = jframework_logger_version_name
+}
+apply from: rootProject.file('gradle/build_library.gradle')
+
+android {
+    defaultConfig {
+        versionCode libraryVersionCode.asType(Integer.class)
+        versionName libraryVersionName
+    }
+}
+
+dependencies {
+    if (applyFromJitpackRepo.toBoolean()) {
+        println('[logger] apply tools from JitpackRepo.')
+        implementation "com.jeff.jframework:tools:${jframework_tools_version_name}"
+    } else {
+        println('[logger] apply tools from local module.')
+        implementation project(':tools')
+    }
+    api rootProject.ext.dependencies["gson"]
+}
