@@ -1,4 +1,6 @@
 # HiveviewRepo
+[![](https://jitpack.io/v/feijeff0486/HiveviewRepo.svg)](https://jitpack.io/#feijeff0486/HiveviewRepo)
+
 项目中常用架包的临时仓库，将架包从JFrag上迁移到Jitpack
 
 ## 依赖
@@ -12,4 +14,16 @@ allprojects {
 }
 ```
 
-然后添加具体的架包依赖：
+然后按需添加具体的架包依赖：
+```groovy
+//核心库
+implementation 'com.github.feijeff0486.HiveviewRepo:core:v0.0.1'
+//日志库
+implementation 'com.github.feijeff0486.HiveviewRepo:logger:v0.0.1'
+//RecyclerView封装库
+implementation 'com.github.feijeff0486.HiveviewRepo:rv:v0.0.1'
+//网络请求库
+implementation 'com.github.feijeff0486.HiveviewRepo:rxrequest:v0.0.1'
+//工具库
+implementation 'com.github.feijeff0486.HiveviewRepo:tools:v0.0.1'
+```
