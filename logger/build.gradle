@@ -21,7 +21,7 @@ android {
 dependencies {
     if (applyFromJitpackRepo.toBoolean()) {
         println('[logger] apply tools from JitpackRepo.')
-        api "com.github.feijeff0486.HiveviewRepo:tools:v0.0.2"
+        api "com.github.feijeff0486.HiveviewRepo:tools:v0.0.3"
     } else {
         println('[logger] apply tools from local module.')
         api project(':tools')
