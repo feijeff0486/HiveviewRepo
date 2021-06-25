@@ -22,8 +22,8 @@ dependencies {
     api rootProject.ext.dependencies["recyclerview"]
     if (applyFromJitpackRepo.toBoolean()) {
         println('[rv] apply core&tools from JitpackRepo.')
-        api "com.github.feijeff0486.HiveviewRepo:core:${jframework_core_version_name}"
-        api "com.github.feijeff0486.HiveviewRepo:tools:${jframework_tools_version_name}"
+        api "com.github.feijeff0486.HiveviewRepo:core:v0.0.1"
+        api "com.github.feijeff0486.HiveviewRepo:tools:v0.0.1"
     } else {
         println('[rv] apply core&tools from local module.')
         api project(':core')
