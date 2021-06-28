@@ -22,12 +22,11 @@ dependencies {
     api rootProject.ext.dependencies["recyclerview"]
     if (applyFromJitpackRepo.toBoolean()) {
         println('[rv] apply core&tools from JitpackRepo.')
-        api "com.github.feijeff0486.HiveviewRepo:tools:v0.0.5"
+        api "com.github.feijeff0486.HiveviewRepo:tools:v0.0.6"
     } else {
         println('[rv] apply core&tools from local module.')
         api project(':core')
         api project(':tools')
     }
 }
-
 apply from: rootProject.file('gradle/build_lib_source.gradle')

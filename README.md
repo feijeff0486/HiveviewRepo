@@ -19,11 +19,13 @@ allprojects {
 然后按需添加具体的架包依赖：
 ```groovy
 //核心库
-implementation 'com.github.feijeff0486.HiveviewRepo:core:v0.0.6'
+implementation 'com.github.feijeff0486.HiveviewRepo:core:v0.0.7'
 //日志库
-implementation 'com.github.feijeff0486.HiveviewRepo:logger:v0.0.6'
+implementation 'com.github.feijeff0486.HiveviewRepo:logger:v0.0.7'
+//RecyclerView封装
+implementation 'com.github.feijeff0486.HiveviewRepo:rv:v0.0.7'
 //网络请求库
-implementation 'com.github.feijeff0486.HiveviewRepo:rxrequest:v0.0.6'
+implementation 'com.github.feijeff0486.HiveviewRepo:rxrequest:v0.0.7'
 //工具库
-implementation 'com.github.feijeff0486.HiveviewRepo:tools:v0.0.6'
+implementation 'com.github.feijeff0486.HiveviewRepo:tools:v0.0.7'
 ```

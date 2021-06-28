@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.jeff.jframework.core.ContextUtils;
-import com.jeff.jframework.core.Preconditions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +34,7 @@ public abstract class AbstractAdapter<M, H extends BaseViewHolder<M>> extends Re
     protected static final int VIEW_TYPE_DEFAULT = 0xfff1;
 
     private final SparseArray<View> mViewArray = new SparseArray<>();
-    protected List<M> mData=new ArrayList<>();
+    protected List<M> mData;
     protected Context mContext;
     protected ViewGroup mParent;
     private LayoutInflater mInflater;
@@ -47,20 +46,13 @@ public abstract class AbstractAdapter<M, H extends BaseViewHolder<M>> extends Re
     private OnItemListener.OnItemKeyListener mKeyListener;
 
     private boolean logging=false;
-    private boolean enableEmptyView = false;
 
     public AbstractAdapter() {
-        this(false);
+        this(new ArrayList<>());
     }
 
-    public AbstractAdapter(List<M> data,boolean enableEmptyView) {
+    public AbstractAdapter(List<M> data) {
         mData = data;
-        this.enableEmptyView=enableEmptyView;
-        setHasStableIds(true);
-    }
-
-    public AbstractAdapter(boolean enableEmptyView) {
-        this.enableEmptyView=enableEmptyView;
         setHasStableIds(true);
     }
 
@@ -85,6 +77,7 @@ public abstract class AbstractAdapter<M, H extends BaseViewHolder<M>> extends Re
         //保证position刷新
         notifyItemRangeInserted(position, getDataSize() - position);
     }
+
 
     public void addItem(M item) {
         int position = getDataSize();
@@ -116,28 +109,7 @@ public abstract class AbstractAdapter<M, H extends BaseViewHolder<M>> extends Re
 
     @Override
     public H onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = getItemView(parent, viewType);
-        if (viewType==VIEW_TYPE_EMPTY){
-            if (enableEmptyView){
-                Preconditions.checkArgument(itemView!=null,"Please setup layout for viewType: "+viewType);
-            }else {
-                return null;
-            }
-            return (H) new BaseViewHolder<M>(itemView){
-                @Override
-                public void bind(M data, int position) {
-
-                }
-
-                @Override
-                public void release(int position) {
-
-                }
-            };
-        }else {
-            Preconditions.checkArgument(itemView!=null,"Please setup layout for viewType: "+viewType);
-        }
-        return createViewHolder(itemView, viewType);
+        return createViewHolder(getItemView(parent, viewType), viewType);
     }
 
     /**
@@ -151,26 +123,12 @@ public abstract class AbstractAdapter<M, H extends BaseViewHolder<M>> extends Re
 
     @Override
     public void onBindViewHolder(@NonNull H holder, int position) {
-        if (getItemViewType(position)==VIEW_TYPE_EMPTY){
-            return;
-        }
-        bindCustomViewHolder(holder, position);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull H holder, int position,
-                                 @NonNull List<Object> payloads) {
-        log("onBindViewHolder", "position:" + position);
-        if (payloads.isEmpty()) {
-            log("onBindViewHolder", "Empty payloads list.");
-            super.onBindViewHolder(holder, position, payloads);
-            return;
-        }
-        log("onBindViewHolder", "current:" + getItem(position).toString());
-        if (payloads.size() > 0 && payloads.get(0) != null) {
-            log("onBindViewHolder", "apply payload.");
-            applyPayload(holder, position, payloads.get(0));
-            log("onBindViewHolder", "after:" + getItem(position).toString());
+        switch (holder.getItemViewType()) {
+            case VIEW_TYPE_EMPTY:
+                break;
+            default:
+                bindCustomViewHolder(holder, position);
+                break;
         }
     }
 
@@ -217,6 +175,23 @@ public abstract class AbstractAdapter<M, H extends BaseViewHolder<M>> extends Re
         bind(holder, mData.get(position), position);
     }
 
+    @Override
+    public void onBindViewHolder(@NonNull H holder, int position,
+                                 @NonNull List<Object> payloads) {
+        log("onBindViewHolder", "position:" + position);
+        if (payloads.isEmpty()) {
+            log("onBindViewHolder", "Empty payloads list.");
+            super.onBindViewHolder(holder, position, payloads);
+            return;
+        }
+        log("onBindViewHolder", "current:" + getItem(position).toString());
+        if (payloads.size() > 0 && payloads.get(0) != null) {
+            log("onBindViewHolder", "apply payload.");
+            applyPayload(holder, position, payloads.get(0));
+            log("onBindViewHolder", "after:" + getItem(position).toString());
+        }
+    }
+
     /**
      * ViewHolder绑定数据
      *
@@ -243,7 +218,7 @@ public abstract class AbstractAdapter<M, H extends BaseViewHolder<M>> extends Re
 
     @Override
     public int getItemViewType(int position) {
-        if (enableEmptyView&&getDataSize()==0){
+        if (getDataSize() == 0 && mViewArray.get(VIEW_TYPE_EMPTY) != null) {
             return VIEW_TYPE_EMPTY;
         } else {
             return getCustomViewType(position);
@@ -279,9 +254,6 @@ public abstract class AbstractAdapter<M, H extends BaseViewHolder<M>> extends Re
                 }
                 log(this.getClass().getSimpleName() + "getItemView", "bindView");
             }
-            if (itemView!=null){
-                mViewArray.put(viewType,itemView);
-            }
         }
         return itemView;
     }
@@ -311,7 +283,7 @@ public abstract class AbstractAdapter<M, H extends BaseViewHolder<M>> extends Re
      * @param layoutId
      * @return
      */
-    private View inflateLayout(@LayoutRes final int layoutId) {
+    protected View inflateLayout(@LayoutRes final int layoutId) {
         return mInflater.inflate(layoutId, mParent, false);
     }
 
@@ -321,8 +293,7 @@ public abstract class AbstractAdapter<M, H extends BaseViewHolder<M>> extends Re
 
     @Override
     public int getItemCount() {
-        if (enableEmptyView&&getDataSize()==0)return 1;
-        return getDataSize();
+        return getDataSize()==0?1:getDataSize();
     }
 
     @Override

@@ -32,7 +32,7 @@ public abstract class BaseViewHolder<M> extends RecyclerView.ViewHolder {
     }
 
     @SuppressWarnings("unchecked")
-    public <V extends View> V findViewById(@IdRes final int viewId) {
+    public <V extends View> V getView(@IdRes final int viewId) {
         View view = viewArray.get(viewId);
         if (view == null) {
             view = itemView.findViewById(viewId);
@@ -92,11 +92,11 @@ public abstract class BaseViewHolder<M> extends RecyclerView.ViewHolder {
     }
 
     public void setOnClickListener(@IdRes final int viewId, View.OnClickListener listener) {
-        findViewById(viewId).setOnClickListener(listener);
+        getView(viewId).setOnClickListener(listener);
     }
 
     public void setOnLongClickListener(@IdRes final int viewId, View.OnLongClickListener listener) {
-        findViewById(viewId).setOnLongClickListener(listener);
+        getView(viewId).setOnLongClickListener(listener);
     }
 
     public void applyPayload(Object payload) {
