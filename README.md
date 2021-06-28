@@ -20,8 +20,6 @@ allprojects {
 implementation 'com.github.feijeff0486.HiveviewRepo:core:v0.0.6'
 //日志库
 implementation 'com.github.feijeff0486.HiveviewRepo:logger:v0.0.6'
-//RecyclerView封装库
-implementation 'com.github.feijeff0486.HiveviewRepo:rv:v0.0.6'
 //网络请求库
 implementation 'com.github.feijeff0486.HiveviewRepo:rxrequest:v0.0.6'
 //工具库
