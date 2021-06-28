@@ -1,10 +1,10 @@
 ext {
-    bintrayName = 'tools'
+    bintrayName = 'rxstealth'
     artifact = bintrayName
-    libraryName = 'JFramework tools library'
-    libraryDescription = 'Provide common tool support.'
-    libraryVersionCode = jframework_tools_version_code
-    libraryVersionName = jframework_tools_version_name
+    libraryName = 'JFramework rxstealth library'
+    libraryDescription = 'JFramework rxstealth library.'
+    libraryVersionCode = jframework_rxstealth_version_code
+    libraryVersionName = jframework_rxstealth_version_name
 }
 group=jitpack_repo_group
 
@@ -20,16 +20,13 @@ android {
 
 dependencies {
     if (applyFromJitpackRepo.toBoolean()) {
-        println('[tools] apply core from JitpackRepo.')
+        println('[rxstealth] apply core from JitpackRepo.')
         api "com.github.feijeff0486.HiveviewRepo:core:v0.0.7"
     } else {
-        println('[tools] apply core from local module.')
+        println('[rxstealth] apply core from local module.')
         api project(':core')
     }
-    api rootProject.ext.dependencies["gson"]
-    api rootProject.ext.dependencies["glide"]
     api rootProject.ext.dependencies["rxjava2"]
     api rootProject.ext.dependencies["rxandroid2"]
 }
-
 apply from: rootProject.file('gradle/build_lib_source.gradle')

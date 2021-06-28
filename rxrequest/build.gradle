@@ -28,7 +28,7 @@ dependencies {
     api rootProject.ext.dependencies["okhttp3_logging_interceptor"]
     if (applyFromJitpackRepo.toBoolean()) {
         println('[rxrequest] apply tools from JitpackRepo.')
-        api "com.github.feijeff0486.HiveviewRepo:tools:v0.0.6"
+        api "com.github.feijeff0486.HiveviewRepo:tools:v0.0.7"
     } else {
         println('[rxrequest] apply tools from local module.')
         api project(':tools')
